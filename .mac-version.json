@@ -1,0 +1,68 @@
+{
+  "main": "fathom-meeting-agent",
+  "main_commit": "03a66adbf5c69337bb1c997a726a08723dd1f97c",
+  "mac": "fathom-meeting-agent-mac",
+  "macgen_commit": "9c2578fc+uncommitted",
+  "date": "2026-09-25",
+  "fingerprint": "fdd2edfa042a643a927c4f4d607b44d9ca03b5daa216f8878db426ffb2b6451b",
+  "left_out_of_fingerprint": [
+    ".mac-version.json",
+    "guide/The-Meeting-Agent (Mac).pdf"
+  ],
+  "files": [
+    {
+      "path": ".claude/agents/fathom-meeting-triage.md",
+      "category": "same",
+      "sha256": "3a4a757b5c2d682785185402b06b3478b244766d092194e2cd9383584261eb19"
+    },
+    {
+      "path": ".claude/agents/the-scribe.md",
+      "category": "same",
+      "sha256": "4f4ed5ce6c72087ae3982498b03a4e1bd03a30319660481a28761ecbe3b2e322"
+    },
+    {
+      "path": ".gitignore",
+      "category": "same",
+      "sha256": "dad93e9f8918e46421f75fffdb35d1f23042402614b3ba0a0023c03dc496c889"
+    },
+    {
+      "path": "BROWSER.md",
+      "category": "changed",
+      "sha256": "23a5080c9b0287bcda07748409218410d4cabebc1a3ee1e122a941e0856db430"
+    },
+    {
+      "path": "CLAUDE.md",
+      "category": "same",
+      "sha256": "6cf0a202f307413aea1788be34566b3caa31beef404712c14726485e66c3914b"
+    },
+    {
+      "path": "Meetings/README.md",
+      "category": "same",
+      "sha256": "66c3fcda958467e746eb553cef1e4fbbfca750d1cb2e6afda42b7e2132995b92"
+    },
+    {
+      "path": "People/README.md",
+      "category": "same",
+      "sha256": "fe8f304b3439a30a9dc84da0498c002cedc1559b0b6c3716d86e72c6b6eb3bb5"
+    },
+    {
+      "path": "README.md",
+      "category": "changed",
+      "sha256": "79cde06c42e9788c15e419ccfcecf5cb1fa5b2fad6c0aaa5744c732c0deafbc4"
+    },
+    {
+      "path": "_CLAUDE.md",
+      "category": "same",
+      "sha256": "35c8f3ca3e10702ef82e99693ba44e6608db791d1403bfe0052149a7fb223f97"
+    },
+    {
+      "path": "guide/The-Meeting-Agent (Mac).pdf",
+      "category": "left out of the fingerprint"
+    },
+    {
+      "path": "guide/build_guide.py",
+      "category": "same",
+      "sha256": "324557bf4bf6a4d494219562b9b4649a8c39e1e3f938ec79bff1fd0a5614ed13"
+    }
+  ]
+}
