@@ -166,7 +166,7 @@ page("second brain", """
   <p>Every client, every call, every decision, every promise, every idea, in 1 folder of plain
      text files on your machine. Claude reads it and writes to it.</p>
   <h3>What that actually buys you</h3>
-  <p>On the webinar I opened """ + W("a person called Chaim", "the note on 1 client") + """ and showed the room every call I have ever
+  <p>On the webinar I opened a client's page in my notes and showed the room every call I have ever
      had with him, going back months. Not a summary of them either, the actual record, down to
      what he said and what I said and what each of us agreed to do. I did not type a word of it.
      The agent in this guide put it there while I was doing something else.</p>
@@ -329,24 +329,26 @@ else:
          labelled "macOS installer"; we tested 3.14.7). When it finishes, double-click
          <strong>Install Certificates.command</strong> and <strong>Update Shell Profile.command</strong> in
          the Python folder inside Applications, then open a new Terminal window. Check with:</p>
-      <p class="c">python3 -c "import sys; print(sys.prefix)"</p>
+      <div class="cmd">python3 -c "import sys; print(sys.prefix)"</div>
       <p>It should print a line starting <strong>/Library/Frameworks/Python.framework</strong>. If it starts
          <strong>/opt/homebrew</strong> or <strong>/usr/local/Cellar</strong>, your Terminal uses Homebrew's
-         Python (Homebrew is an add-on installer many Mac owners use). Every command here still works.
-         The browser the agent drives is installed into a private Python folder: a folder with its own
-         copy of Python's add-ons, which works with python.org's Python and with Homebrew's.</p>
+         Python (Homebrew is an add-on installer many Mac owners use). Every line in this guide works
+         with either Python. Playwright, the add-on that drives the browser, is installed into a private
+         Python folder called .venv inside the download (step 3): a folder with its own copy of Python's
+         add-ons.</p>
       <p><strong>The first time you type git.</strong> Your Mac may show a box asking to install the
          command line developer tools. Press Install, wait until it has finished, then type the git line
          again.</p>
       <p><strong>If Terminal says claude is not found,</strong> type the line below. It adds the folder
          Claude Code is installed in to the list of folders Terminal looks in for programs. Then open a
          new Terminal window and check with <strong>claude --version</strong>.</p>
-      <p class="c">echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</p>
+      <div class="cmd">echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</div>
       <p><strong>Apple Silicon or Intel</strong> (the 2 kinds of chip a Mac can have; the Apple menu, then
          About This Mac, shows yours): the steps are the same on both, and both were tested.</p>
-      <p><strong>Tried only on test Macs.</strong> Every step above was tried only on test Macs (Macs
-         GitHub rents out by the minute to run scripts, not a person's own Mac), never on a real Mac. 1 of
-         them cannot happen on a test Mac, so it was not tried at all: the developer-tools box.</p>
+      <p><strong>Tried only on test Macs.</strong> Every step in this guide except 1 was tried on test
+         Macs (Macs GitHub rents out by the minute to run scripts, not a person's own Mac), never on a real
+         Mac. The exception is the box asking to install the developer tools: it cannot appear on a test
+         Mac, so it was not tried at all.</p>
     """, only="mac")
 
     page("install", """
@@ -359,16 +361,24 @@ else:
       <h3>Step 2 &nbsp;/&nbsp; Download the agent</h3>
       <p>Git is the tool programmers use to copy code. Open Terminal and run this:</p>
       <div class="cmd">git clone https://github.com/OUTLIERS-ai/fathom-meeting-agent-mac.git</div>
-      <p>If you have not got git, open that same address without the <strong>.git</strong> on the
-         end, press the green Code button, and download the zip instead.</p>
+      <p>If the developer-tools box will not install, open that same address without the
+         <strong>.git</strong> on the end, press the green Code button, and download the zip instead.</p>
       <h3>Step 3 &nbsp;/&nbsp; Install the browser</h3>
       <p>The agent reads Fathom the way you do, through a real browser, because Fathom has no free
-         way in for software. Go into the folder you downloaded in Step 2 (it is called
-         <strong>fathom-meeting-agent-mac-main</strong> if you used the zip), make a private Python folder
-         called <strong>.venv</strong> in it, and install the browser into that folder:</p>
+         way in for software. Go into the folder you downloaded in Step 2, make a private Python folder
+         called <strong>.venv</strong> in it (the dot at the start means Finder hides it), install
+         Playwright into it, then the browser Playwright drives:</p>
       <div class="cmd">cd fathom-meeting-agent-mac<br>python3 -m venv .venv<br>source .venv/bin/activate &amp;&amp; python -m pip install playwright<br>source .venv/bin/activate &amp;&amp; python -m playwright install chromium</div>
-      <p>About 200MB, about 5 minutes. Playwright is free and made by Microsoft. The agent knows to
-         look for it in <strong>.venv</strong>.</p>
+      <p>If you used the zip, the folder is called <strong>fathom-meeting-agent-mac-main</strong> and is in
+         your Downloads folder: type this in place of the first line (the zip route was not tried on
+         the test Macs):</p>
+      <div class="cmd">cd ~/Downloads/fathom-meeting-agent-mac-main</div>
+      <p>The part before &amp;&amp; switches Terminal into the .venv folder, so the python after it is
+         the folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and
+         made by Microsoft. The last line downloads Chromium, the free browser Google Chrome is built
+         from; Playwright keeps it in its own folder, ~/Library/Caches/ms-playwright, not in .venv. About
+         320 to 340MB in all (measured on test Macs). The agent looks for Playwright in
+         <strong>.venv</strong>.</p>
     """)
 
     page("install", """
@@ -377,13 +387,13 @@ else:
       <div class="box">
         <span class="mono">THIS IS THE STEP EVERYONE MISSES</span>
         <p>In the same Terminal window, still in that folder, open the browser Playwright just
-           installed:</p>
-        <div class="cmd">source .venv/bin/activate &amp;&amp; python -m playwright open --user-data-dir=.browser-profile https://fathom.video</div>
+           installed, with the line under this box.</p>
         <p>Log in exactly as you normally would. <strong>Take as long as you need.</strong> Nothing is
            counting down. Nothing. Go and find your password, wait for a code, make a cup of tea.
            Then close the browser. The login stays in the <strong>.browser-profile</strong> folder
            and you will not do this again.</p>
       </div>
+      <div class="cmd">source .venv/bin/activate &amp;&amp; python -m playwright open --user-data-dir=.browser-profile https://fathom.video</div>
       <p><strong>Your agent never sees your password.</strong> It never types one and it never
          stores one. If anything ever asks you to hand a password to an agent, stop, because
          something is wrong.</p>
@@ -484,16 +494,16 @@ def mac_run_page(run):
               "<p>The Fathom login. Step 4 opens a browser for you to log into Fathom by hand, which a script "
               "cannot do, so the agent never collected a call on a test Mac. The same line with a blank page in "
               "place of Fathom's address was run, and the browser opened.</p>"
-              "<p>The first time you type git, your Mac may ask to install the command line developer tools. "
-              "GitHub's test Macs already have them, so that box never appeared and was not tried.</p></div>")
+              "<p>The box asking to install the developer tools (page 7) and the zip route (page 8).</p></div>")
     if not run:
         return '<div class="macrun">%s<p>%s</p>%s</div>' % (head, NOT_YET, limits)
-    intro = ("<p>On %s a script downloaded this agent afresh on 7 test Macs and ran each line this guide "
-             "prints that a test Mac can run, in the guide's order, exactly as printed; the line it could not run "
-             "is marked below. After a <span style=\"font-family:Consolas,monospace\">cd</span> line, the lines "
-             "that follow ran in that folder, as they do for you. The lines were run by the script, not typed by "
-             "a person. <strong>check Fathom</strong> and the agent itself need Claude Code and your own login, so "
-             "they were not run.</p>" % H.escape(run["date"]))
+    intro = ("<p>On %s a script (a list of commands each test Mac carries out by itself) downloaded a fresh "
+             "copy of this agent on 7 test Macs and ran each line this guide gives you to type that a test Mac "
+             "can run, in the guide's order, exactly as printed; the lines it could not run are marked below. "
+             "After a <span style=\"font-family:Consolas,monospace\">cd</span> line (cd moves Terminal into a "
+             "folder), the lines that follow ran in that folder, as they do for you. The script ran them; no "
+             "person typed them. Typing check Fathom in Claude Code, and the agent itself, need Claude Code and "
+             "your own login, so neither was run.</p>" % H.escape(run["date"]))
     macs = "<p>%s</p>" % _inline(run["macs"])
     rows = "".join('%s<p class="r">%s</p>' % (_code(s["command"]), _inline(s["status"])) for s in run["steps"])
     notes = "".join("<p>%s</p>" % _inline(n) for n in run.get("notes", []))

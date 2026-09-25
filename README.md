@@ -37,9 +37,9 @@ git clone https://github.com/OUTLIERS-ai/fathom-meeting-agent-mac.git
 No git? Download the zip from the same address and unzip it.
 
 **Step 2 — install the browser.** The agent reads Fathom the way you do, through a real browser,
-because Fathom has no free way in. Go into the folder you downloaded in Step 1 (it is called
-`fathom-meeting-agent-mac-main` if you used the zip), make a private Python folder called `.venv`
-in it, and install the browser into that folder:
+because Fathom has no free way in. Go into the folder you downloaded in Step 1, make a private
+Python folder called `.venv` in it (the dot at the start means Finder hides it), install
+Playwright into it, then the browser Playwright drives:
 
 ```
 cd fathom-meeting-agent-mac
@@ -48,8 +48,15 @@ source .venv/bin/activate && python -m pip install playwright
 source .venv/bin/activate && python -m playwright install chromium
 ```
 
-About 200MB, about 5 minutes. Playwright is free and made by Microsoft. The agent knows to look
-for it in `.venv`.
+If you used the zip, the folder is called `fathom-meeting-agent-mac-main` and is in your Downloads
+folder: type `cd ~/Downloads/fathom-meeting-agent-mac-main` instead of the first line (the zip
+route was not tried on the test Macs).
+
+The part before `&&` switches Terminal into the `.venv` folder, so the `python3` after it is the
+folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and made
+by Microsoft. The last line downloads Chromium, the free browser Google Chrome is built from;
+Playwright keeps it in its own folder, `~/Library/Caches/ms-playwright`, not in `.venv`. About 320
+to 340MB in all (measured on test Macs). The agent looks for Playwright in `.venv`.
 
 **Step 3 — log into Fathom yourself, by hand. Once.** This is the step everyone misses.
 
@@ -162,4 +169,4 @@ the risk is yours.
 
 *Ashley Dean Smith · Outliers*
 
-This repo is made automatically from fathom-meeting-agent@ee226f8. To report a problem or suggest a change, use that repo, not this one.
+This repo is made automatically from fathom-meeting-agent@281f000. To report a problem or suggest a change, use that repo, not this one.

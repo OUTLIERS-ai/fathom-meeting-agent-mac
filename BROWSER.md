@@ -12,7 +12,9 @@ anything by hand, and it is how you would collect anything else that sits behind
 
 ## Setup, once
 
-From inside this folder, make a private Python folder called `.venv` and install the browser into it:
+From inside this folder, make a private Python folder called `.venv`, install Playwright into it,
+then the browser Playwright drives (Playwright keeps the browser in its own folder,
+`~/Library/Caches/ms-playwright`):
 
 ```
 python3 -m venv .venv
