@@ -1,10 +1,10 @@
 {
   "main": "fathom-meeting-agent",
-  "main_commit": "23a9633b0bb6d2648de4b51dadf4b23b1c0f3cda",
+  "main_commit": "c7b69d432574806d2773acb91ffb90e6dc3a6e2f",
   "mac": "fathom-meeting-agent-mac",
   "macgen_commit": "9c2578fc+uncommitted",
   "date": "2026-09-25",
-  "fingerprint": "5eb3391ceb4f433e31bf3ec6617d20673363d7c28e08b98f376e9678588ed09a",
+  "fingerprint": "ab422301fbb9c82efd7a3f839deb1e90e294eb227efeb8b47a11bf1cb376cae5",
   "left_out_of_fingerprint": [
     ".mac-version.json",
     "guide/The-Meeting-Agent (Mac).pdf"
@@ -48,7 +48,7 @@
     {
       "path": "README.md",
       "category": "changed",
-      "sha256": "d0b4b29ddf21ba9d1863a3fbceda19afecb3bc07619621e7039696b484201aa3"
+      "sha256": "34c57dd47d914c882a6c541f63274f1e6818e2a2273a82e28dfe3d724e08eec5"
     },
     {
       "path": "_CLAUDE.md",
@@ -62,7 +62,7 @@
     {
       "path": "guide/build_guide.py",
       "category": "same",
-      "sha256": "835fa9cd13912de79e430ba2332170cc7659a7599e2df927a05910e2462126df"
+      "sha256": "9edd26b306c9918254884f6358e74bb0b91ad5ef2aaa02fda88d681351e3904a"
     }
   ]
 }

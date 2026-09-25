@@ -165,7 +165,7 @@ page("second brain", """
   <p>Every client, every call, every decision, every promise, every idea, in 1 folder of plain
      text files on your machine. Claude reads it and writes to it.</p>
   <h3>What that actually buys you</h3>
-  <p>On the webinar I opened a person called Chaim and showed the room every call I have ever
+  <p>On the webinar I opened """ + W("a person called Chaim", "the note on 1 client") + """ and showed the room every call I have ever
      had with him, going back months. Not a summary of them either, the actual record, down to
      what he said and what I said and what each of us agreed to do. I did not type a word of it.
      The agent in this guide put it there while I was doing something else.</p>
