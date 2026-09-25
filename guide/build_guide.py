@@ -102,9 +102,9 @@ CSS = """
 MAC_CSS = """
   .band { display:inline-block; margin-top:8mm; padding:1.6mm 6mm; background:var(--ink); color:var(--paper);
           font-family:Consolas,monospace; font-size:10pt; letter-spacing:.3em; }
-  .c { font-family:Consolas,monospace; font-size:7.6pt; white-space:nowrap; margin:0; }
-  .r { font-size:9pt; color:var(--ox); margin:0 0 1.6mm 0; }
   .macrun p { font-size:9.6pt; line-height:1.42; margin-bottom:2.2mm; }
+  .macrun p.c, p.c { font-family:Consolas,monospace; font-size:7.6pt; line-height:1.35; white-space:nowrap; margin:0; }
+  .macrun p.r { font-size:9pt; line-height:1.3; color:var(--ox); margin:0 0 1.6mm 0; }
   .macrun .box p { margin-bottom:1.5mm; }
 """
 
@@ -498,12 +498,16 @@ def mac_run_page(run):
     notes = "".join("<p>%s</p>" % _inline(n) for n in run.get("notes", []))
     link = ("<p>The script's record of the run is public, for anyone who wants to check it; you do not need to "
             "open it: %s</p>" % H.escape(run["run_url"]))
-    return ('<div class="macrun">%s%s%s<h3>Each line, then what happened to it</h3>%s%s%s%s</div>'
-            % (head, intro, macs, rows, notes, link, limits))
+    return [('<div class="macrun">%s%s%s<h3>Each line, then what happened to it</h3>%s</div>'
+             % (head, intro, macs, rows)),
+            ('<div class="macrun"><div class="mono label">THE MAC TEST, CONTINUED</div>%s%s%s</div>'
+             % (notes, link, limits))]
 
 
 if MAC:
-    page("what was run", mac_run_page(RUN))
+    # 2 pages once there is a record: the 9 rows and the box do not fit under the introduction
+    for _body in ([mac_run_page(RUN)] if not RUN else mac_run_page(RUN)):
+        page("what was run", _body)
 
 
 def build_html():
@@ -549,6 +553,11 @@ def render():
         })""")
 
         bad = [r for r in rows if r["needed"] > r["have"] + 2]
+        # a command line in the command font wider than its column would be cut off at the page edge
+        for c in page_.evaluate("""() => [...document.querySelectorAll('p.c')]
+                                   .filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent)"""):
+            print("COMMAND LINE TOO WIDE, it would be cut off: %s" % c)
+            bad.append({"i": -1})
         for r in rows:
             over = r["needed"] - r["have"]
             flag = ("OVERFLOWS by %dpx  <-- TEXT WILL BE DELETED" % over) if over > 2 \
