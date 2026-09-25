@@ -102,6 +102,7 @@ CSS = """
 MAC_CSS = """
   .band { display:inline-block; margin-top:8mm; padding:1.6mm 6mm; background:var(--ink); color:var(--paper);
           font-family:Consolas,monospace; font-size:10pt; letter-spacing:.3em; }
+  .cmd { white-space:pre; word-break:normal; overflow:hidden; }
   .macrun p { font-size:9.6pt; line-height:1.42; margin-bottom:2.2mm; }
   .macrun p.c, p.c { font-family:Consolas,monospace; font-size:7.6pt; line-height:1.35; white-space:nowrap; margin:0; }
   .macrun p.r { font-size:9pt; line-height:1.3; color:var(--ox); margin:0 0 1.6mm 0; }
@@ -536,6 +537,13 @@ def render():
         page_.goto(HTML_PATH.as_uri())
         page_.wait_for_timeout(700)
 
+        if MAC:
+            # a command never breaks across lines on a Mac page (a member copies it whole): a command box
+            # whose longest line is too wide is set smaller, 9.5pt down to 6.5pt, until every line fits
+            page_.evaluate("""() => document.querySelectorAll('.cmd').forEach(el => {
+                let pt = 9.5;
+                while (el.scrollWidth > el.clientWidth + 1 && pt > 6.5) { pt -= 0.25; el.style.fontSize = pt + 'pt'; }
+            })""")
         # Honest overflow probe. overflow:hidden clamps scrollHeight, so each page is
         # cloned into a hidden auto-height copy and measured there instead.
         rows = page_.evaluate("""() => [...document.querySelectorAll('.page')].map((el, i) => {
@@ -554,7 +562,7 @@ def render():
 
         bad = [r for r in rows if r["needed"] > r["have"] + 2]
         # a command line in the command font wider than its column would be cut off at the page edge
-        for c in page_.evaluate("""() => [...document.querySelectorAll('p.c')]
+        for c in page_.evaluate("""() => [...document.querySelectorAll('p.c, .cmd')]
                                    .filter(el => el.scrollWidth > el.clientWidth + 1).map(el => el.textContent)"""):
             print("COMMAND LINE TOO WIDE, it would be cut off: %s" % c)
             bad.append({"i": -1})
