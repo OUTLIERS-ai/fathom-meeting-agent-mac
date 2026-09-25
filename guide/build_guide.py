@@ -54,6 +54,23 @@ else:
 PNG_DIR.mkdir(exist_ok=True)
 
 
+def tried_sentence(run):
+    """How much of the guide was tried on test Macs, counted from the run record: every line marked "not run"
+    in it, plus the 2 steps that are not lines to type (the developer-tools box and saying check Fathom)."""
+    head = ("Every step in this guide was tried on test Macs (Macs GitHub rents out by the minute to run scripts, "
+            "not a person's own Mac), never on a real Mac")
+    if not run:
+        return head + ", apart from the steps the last page marks as not tried."
+    untried = [s for s in run["steps"] if s["status"].startswith("not run")]
+    n = len(untried) + 2
+    return (head + ", except %d: the box asking to install the developer tools, which cannot appear on a test "
+            "Mac; saying check Fathom in Claude Code, which needs your own login; and the %d %s marked \"not "
+            "run\" on the Mac test pages at the end of this guide." % (n, len(untried), "line" if len(untried) == 1 else "lines"))
+
+
+TRIED = tried_sentence(RUN) if MAC else ""
+
+
 def W(win, mac):
     """The words for this guide's system: `win` for the guide as it has always been, `mac` for --mac."""
     return mac if MAC else win
@@ -339,16 +356,14 @@ else:
       <p><strong>The first time you type git.</strong> Your Mac may show a box asking to install the
          command line developer tools. Press Install, wait until it has finished, then type the git line
          again.</p>
-      <p><strong>If Terminal says claude is not found,</strong> type the line below. It adds the folder
+      <p><strong>After step 1 on the next page, if Terminal says claude is not found,</strong> type the line
+         below. It adds the folder
          Claude Code is installed in to the list of folders Terminal looks in for programs. Then open a
          new Terminal window and check with <strong>claude --version</strong>.</p>
       <div class="cmd">echo 'export PATH="$HOME/.local/bin:$PATH"' &gt;&gt; ~/.zshrc</div>
       <p><strong>Apple Silicon or Intel</strong> (the 2 kinds of chip a Mac can have; the Apple menu, then
          About This Mac, shows yours): the steps are the same on both, and both were tested.</p>
-      <p><strong>Tried only on test Macs.</strong> Every step in this guide except 1 was tried on test
-         Macs (Macs GitHub rents out by the minute to run scripts, not a person's own Mac), never on a real
-         Mac. The exception is the box asking to install the developer tools: it cannot appear on a test
-         Mac, so it was not tried at all.</p>
+      <p><strong>Tried only on test Macs.</strong> """ + TRIED + """</p>
     """, only="mac")
 
     page("install", """
@@ -362,7 +377,8 @@ else:
       <p>Git is the tool programmers use to copy code. Open Terminal and run this:</p>
       <div class="cmd">git clone https://github.com/OUTLIERS-ai/fathom-meeting-agent-mac.git</div>
       <p>If the developer-tools box will not install, open that same address without the
-         <strong>.git</strong> on the end, press the green Code button, and download the zip instead.</p>
+         <strong>.git</strong> on the end, press the green Code button, and download the zip instead. If
+         it stays a zip file in Downloads, double-click it to unzip it.</p>
       <h3>Step 3 &nbsp;/&nbsp; Install the browser</h3>
       <p>The agent reads Fathom the way you do, through a real browser, because Fathom has no free
          way in for software. Go into the folder you downloaded in Step 2, make a private Python folder
@@ -377,7 +393,7 @@ else:
          python after &amp;&amp; is the folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and
          made by Microsoft. The last line downloads Chromium, the free browser Google Chrome is built
          from; Playwright keeps it in its own folder, ~/Library/Caches/ms-playwright, not in .venv. About
-         320 to 340MB in all (measured on test Macs). The agent looks for Playwright in
+         330 to 350MB in all (measured on test Macs). The agent looks for Playwright in
          <strong>.venv</strong>.</p>
     """)
 
@@ -398,6 +414,8 @@ else:
          stores one. If anything ever asks you to hand a password to an agent, stop, because
          something is wrong.</p>
       <h3>Step 5 &nbsp;/&nbsp; Open Claude Code inside the folder and say:</h3>
+      <p>In the same Terminal window, still in that folder, type <strong>claude</strong> and press Return,
+         then say:</p>
       <div class="cmd">check Fathom</div>
       <p>That is it. Afterwards any of these work: <em>any new calls?</em> &nbsp;/&nbsp;
          <em>process my meetings</em> &nbsp;/&nbsp; <em>triage my recordings</em>.</p>

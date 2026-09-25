@@ -55,8 +55,8 @@ route was not tried on the test Macs).
 Each line that starts with `source` switches Terminal into the `.venv` folder first, so the
 `python3` after `&&` is the folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and made
 by Microsoft. The last line downloads Chromium, the free browser Google Chrome is built from;
-Playwright keeps it in its own folder, `~/Library/Caches/ms-playwright`, not in `.venv`. About 320
-to 340MB in all (measured on test Macs). The agent looks for Playwright in `.venv`.
+Playwright keeps it in its own folder, `~/Library/Caches/ms-playwright`, not in `.venv`. About 330
+to 350MB in all (measured on test Macs). The agent looks for Playwright in `.venv`.
 
 **Step 3 — log into Fathom yourself, by hand. Once.** This is the step everyone misses.
 
@@ -169,4 +169,4 @@ the risk is yours.
 
 *Ashley Dean Smith · Outliers*
 
-This repo is made automatically from fathom-meeting-agent@e1b9caa. To report a problem or suggest a change, use that repo, not this one.
+This repo is made automatically from fathom-meeting-agent@e04eb6e. To report a problem or suggest a change, use that repo, not this one.
