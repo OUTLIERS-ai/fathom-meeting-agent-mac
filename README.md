@@ -52,8 +52,8 @@ If you used the zip, the folder is called `fathom-meeting-agent-mac-main` and is
 folder: type `cd ~/Downloads/fathom-meeting-agent-mac-main` instead of the first line (the zip
 route was not tried on the test Macs).
 
-The part before `&&` switches Terminal into the `.venv` folder, so the `python3` after it is the
-folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and made
+Each line that starts with `source` switches Terminal into the `.venv` folder first, so the
+`python3` after `&&` is the folder's own copy. Playwright, an add-on that lets a program drive a web browser, is free and made
 by Microsoft. The last line downloads Chromium, the free browser Google Chrome is built from;
 Playwright keeps it in its own folder, `~/Library/Caches/ms-playwright`, not in `.venv`. About 320
 to 340MB in all (measured on test Macs). The agent looks for Playwright in `.venv`.
@@ -169,4 +169,4 @@ the risk is yours.
 
 *Ashley Dean Smith · Outliers*
 
-This repo is made automatically from fathom-meeting-agent@281f000. To report a problem or suggest a change, use that repo, not this one.
+This repo is made automatically from fathom-meeting-agent@e1b9caa. To report a problem or suggest a change, use that repo, not this one.
