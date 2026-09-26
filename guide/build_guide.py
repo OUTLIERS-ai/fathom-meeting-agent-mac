@@ -57,15 +57,18 @@ PNG_DIR.mkdir(exist_ok=True)
 def tried_sentence(run):
     """How much of the guide was tried on test Macs, counted from the run record: every line marked "not run"
     in it, plus the 2 steps that are not lines to type (the developer-tools box and saying check Fathom)."""
-    head = ("Every step in this guide was tried on test Macs (Macs GitHub rents out by the minute to run scripts, "
-            "not a person's own Mac), never on a real Mac")
+    # wave s2 readers: "never on a real Mac, except N" read as N steps tried on a real Mac. Every step except N was
+    # tried on test Macs; no step on a real Mac; the N were not tried at all, each with its reason
     if not run:
-        return head + ", apart from the steps the last page marks as not tried."
+        return ("Every step in this guide was tried on test Macs (Macs GitHub rents out by the minute to run a "
+                "script), apart from the steps the last page marks as not tried. No step was tried on a real Mac.")
     untried = [s for s in run["steps"] if s["status"].startswith("not run")]
     n = len(untried) + 2
-    return (head + ", except %d: the box asking to install the developer tools, which cannot appear on a test "
-            "Mac; saying check Fathom in Claude Code, which needs your own login; and the %d %s marked \"not "
-            "run\" on the Mac test pages at the end of this guide." % (n, len(untried), "line" if len(untried) == 1 else "lines"))
+    return ("Every step in this guide, except %d, was tried on test Macs (Macs GitHub rents out by the minute to run "
+            "a script). No step was tried on a real Mac. The %d were not tried at all: the box asking to install the "
+            "developer tools, which cannot appear on a test Mac; saying check Fathom in Claude Code, which needs "
+            "your own login; and the %d %s marked \"not run\", each with its reason, on the Mac test pages at the "
+            "end of this guide." % (n, n, len(untried), "line" if len(untried) == 1 else "lines"))
 
 
 TRIED = tried_sentence(RUN) if MAC else ""
@@ -490,8 +493,7 @@ page("limits", """
 
 # ---------------------------------------------------------------- Mac only: what was run on a Mac
 NOT_YET = "Mac test for this version not yet recorded."
-TEST_MAC = ("A <strong>test Mac</strong>, here, is one of the Macs GitHub rents out by the minute to run a script: "
-            "not a Mac a person uses, and not yours.")
+TEST_MAC = "A <strong>test Mac</strong> is one of the Macs GitHub rents out by the minute to run a script."
 
 
 def _code(s):
@@ -508,7 +510,7 @@ def _inline(s):
 def mac_run_page(run):
     head = ('<div class="mono label">THE MAC TEST</div><h2>What was run on a Mac</h2>'
             '<p>%s</p>' % TEST_MAC)
-    limits = ('<div class="box"><span class="mono">NOT TESTED ON A REAL MAC</span>'
+    limits = ('<div class="box"><span class="mono">NOT RUN ON THE TEST MACS</span>'
               "<p>The Fathom login. Step 4 opens a browser for you to log into Fathom by hand, which a script "
               "cannot do, so the agent never collected a call on a test Mac. The same line with a blank page in "
               "place of Fathom's address was run, and the browser opened.</p>"
